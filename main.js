@@ -11,27 +11,45 @@ const camera = new THREE.PerspectiveCamera(
 
 const canvas = document.querySelector("#c");
 const renderer = new THREE.WebGLRenderer({ canvas });
-renderer.setSize(window.innerWidth, window.innerHeight);
+//renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(600, 375);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.CapsuleGeometry(1, 1.5, 4, 8);
+/*
+const geometry = new THREE.CapsuleGeometry(1, 3, 4, 8);
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const capsule = new THREE.Mesh(geometry, material);
 scene.add(capsule);
+*/
 
-camera.position.z = 5;
+var xDistance = 50;
+var zDistance = 30;
+var geometry = new THREE.CapsuleGeometry(1, 3, 8);
+var material = new THREE.MeshBasicMaterial({ color: 0x00ff44 });
 
-document.querySelector("body").addEventListener("click", animate);
+//initial offset so does not start in middle.
+var xOffset = -80;
 
-let cars = ["Bmw"];
+for (var i = 0; i < 4; i++) {
+  for (var j = 0; j < 3; j++) {
+    var capsule = new THREE.Mesh(geometry, material);
+    capsule.position.x = (xDistance * i) + xOffset;
+    capsule.position.z = (zDistance * j);
+
+    scene.add(capsule);
+  }
+};
+
+camera.position.set(0, 50, 150);
+camera.lookAt(scene.position);
+
+document.querySelector("body").addEventListener("click", animate);;
 
 function animate() {
   requestAnimationFrame(animate);
+
   capsule.rotation.x += 0.01;
-  capsule.rotation.y += 0.01;
-  cars.push();
+
   renderer.render(scene, camera);
 }
 animate();
-
-hejhej;
